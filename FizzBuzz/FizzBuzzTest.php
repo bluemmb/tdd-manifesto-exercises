@@ -31,4 +31,10 @@ class FizzBuzzTest extends TestCase
         $string = $this->fizzBuzz->handle(10);
         $this->assertSame("Buzz", $string);
     }
+
+    public function test_fizzbuzz_returns_fizzbuzz_for_multiple_of_three_and_five()
+    {
+        $string = $this->fizzBuzz->handle(15);
+        $this->assertSame("FizzBuzz", $string);
+    }
 }
