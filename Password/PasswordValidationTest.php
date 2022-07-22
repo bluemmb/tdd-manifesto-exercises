@@ -24,9 +24,9 @@ class PasswordValidationTest extends TestCase
     public function provider_valid_passwords_data() : array
     {
         return [
-            ["1234a5678"],
-            ["abcd1efgh2"],
-            ["a1b2c3d4"],
+            ["1234A5678"],
+            ["Abcd1Efgh2"],
+            ["A1b2c3d4"],
         ];
     }
 
@@ -50,6 +50,13 @@ class PasswordValidationTest extends TestCase
         $this->assertSame($result->valid, false);
         $this->assertTrue($this->strContains($result->errors, PasswordValidation::ERROR_MIN_LENGTH));
         $this->assertTrue($this->strContains($result->errors, PasswordValidation::ERROR_TWO_NUMBERS));
+    }
+
+    public function test_password_without_capital_letter_should_be_invalid()
+    {
+        $result = $this->passwordValidation->validate("ab12cd34");
+        $this->assertSame($result->valid, false);
+        $this->assertTrue($this->strContains($result->errors, PasswordValidation::ERROR_CAPITAL_LETTER));
     }
 
     private function strContains($haystack, $needle)
