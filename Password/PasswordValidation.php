@@ -8,9 +8,14 @@ class PasswordValidation
 
     public function validate($password) : ValidatorResult
     {
-        if ( strlen($password) < 8 )
+        if ( ! $this->validatePasswordLength($password) )
             return new ValidatorResult(false, self::ERROR_MIN_LENGTH);
 
         return new ValidatorResult(true);
+    }
+
+    private function validatePasswordLength($password)
+    {
+        return strlen($password) >= 8;
     }
 }
