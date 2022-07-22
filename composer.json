@@ -5,7 +5,8 @@
     "autoload": {
         "psr-4": {
             "FizzBuzz\\": "FizzBuzz",
-            "StringCalculator\\": "StringCalculator"
+            "StringCalculator\\": "StringCalculator",
+            "Password\\": "Password"
         }
     }
 }
