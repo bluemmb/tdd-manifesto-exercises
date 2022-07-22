@@ -10,11 +10,16 @@ class PasswordValidation
 
     public function validate($password) : ValidatorResult
     {
+        $errors = [];
+
         if ( ! $this->validatePasswordLength($password) )
-            return new ValidatorResult(false, self::ERROR_MIN_LENGTH);
+            $errors[] = self::ERROR_MIN_LENGTH;
 
         if ( ! $this->validateTwoNumbersInPassword($password) )
-            return new ValidatorResult(false, self::ERROR_TWO_NUMBERS);
+            $errors[] = self::ERROR_TWO_NUMBERS;
+
+        if ( count($errors) )
+            return new ValidatorResult(false, $errors);
 
         return new ValidatorResult(true);
     }

@@ -5,11 +5,24 @@ namespace Password;
 class ValidatorResult
 {
     public bool $valid;
-    public string $error;
+    public ?string $errors;
 
-    public function __construct(bool $valid, string $error="")
+    /**
+     * ValidatorResult constructor.
+     * @param bool $valid
+     * @param string|array|null $errors
+     */
+    public function __construct(bool $valid, $errors=null)
     {
         $this->valid = $valid;
-        $this->error = $error;
+        $this->setErrors($errors);
+    }
+
+    private function setErrors($errors)
+    {
+        if ( is_array($errors) )
+            $this->errors = join("\n", $errors);
+        else
+            $this->errors = $errors;
     }
 }

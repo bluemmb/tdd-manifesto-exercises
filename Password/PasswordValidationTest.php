@@ -34,13 +34,26 @@ class PasswordValidationTest extends TestCase
     {
         $result = $this->passwordValidation->validate("1234567");
         $this->assertSame($result->valid, false);
-        $this->assertSame($result->error, PasswordValidation::ERROR_MIN_LENGTH);
+        $this->assertTrue($this->strContains($result->errors, PasswordValidation::ERROR_MIN_LENGTH));
     }
 
     public function test_password_without_at_least_2_numbers_should_be_invalid()
     {
         $result = $this->passwordValidation->validate("c12abcdsdcsdc");
         $this->assertSame($result->valid, false);
-        $this->assertSame($result->error, PasswordValidation::ERROR_TWO_NUMBERS);
+        $this->assertTrue($this->strContains($result->errors, PasswordValidation::ERROR_TWO_NUMBERS));
+    }
+
+    public function test_password_should_return_multiple_errors()
+    {
+        $result = $this->passwordValidation->validate("a1");
+        $this->assertSame($result->valid, false);
+        $this->assertTrue($this->strContains($result->errors, PasswordValidation::ERROR_MIN_LENGTH));
+        $this->assertTrue($this->strContains($result->errors, PasswordValidation::ERROR_TWO_NUMBERS));
+    }
+
+    private function strContains($haystack, $needle)
+    {
+        return strpos($haystack, $needle) != -1;
     }
 }
