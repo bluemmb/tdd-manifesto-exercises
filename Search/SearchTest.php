@@ -28,4 +28,13 @@ class SearchTest extends TestCase
             $result,
         );
     }
+
+    public function test_search_should_be_case_insensitive()
+    {
+        $result = $this->search->handle("vA");
+        $this->assertEqualsCanonicalizing(
+            ["Valencia", "Vancouver"],
+            $result,
+        );
+    }
 }
