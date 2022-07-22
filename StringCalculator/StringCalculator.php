@@ -10,10 +10,16 @@ class StringCalculator
             return 0;
 
         $numbersArray = explode(",", $numbers);
+        return $this->sumArrayOfNumbers($numbersArray);
+    }
 
-        if ( count($numbersArray) == 1 )
-            return (int)$numbersArray[0];
 
-        return (int)$numbersArray[0] + (int)$numbersArray[1];
+    private function sumArrayOfNumbers(array $array) : int
+    {
+        $sum = 0;
+        foreach ( $array as $number )
+            $sum += (int)$number;
+
+        return $sum;
     }
 }

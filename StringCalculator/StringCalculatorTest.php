@@ -28,4 +28,10 @@ class StringCalculatorTest extends TestCase
     {
         self::assertSame(3, $this->stringCalculator->Add("1,2"));
     }
+
+    public function test_add_returns_sum_of_any_number_of_comma_separated_numbers()
+    {
+        self::assertSame(6, $this->stringCalculator->Add("1,2,3"));
+        self::assertSame(15, $this->stringCalculator->Add("1,2,3,4,5"));
+    }
 }
