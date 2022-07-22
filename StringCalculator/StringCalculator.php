@@ -9,6 +9,11 @@ class StringCalculator
         if ( $numbers == "" )
             return 0;
 
-        throw new \Exception();
+        $numbersArray = explode(",", $numbers);
+
+        if ( count($numbersArray) == 1 )
+            return (int)$numbersArray[0];
+
+        return (int)$numbersArray[0] + (int)$numbersArray[1];
     }
 }

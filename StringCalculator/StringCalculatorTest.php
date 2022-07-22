@@ -18,4 +18,14 @@ class StringCalculatorTest extends TestCase
     {
         self::assertSame(0, $this->stringCalculator->Add(""));
     }
+
+    public function test_add_returns_integer_of_given_single_number_string()
+    {
+        self::assertSame(1, $this->stringCalculator->Add("1"));
+    }
+
+    public function test_add_returns_sum_of_two_comma_separated_numbers()
+    {
+        self::assertSame(3, $this->stringCalculator->Add("1,2"));
+    }
 }
