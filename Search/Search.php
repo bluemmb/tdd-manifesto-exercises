@@ -20,7 +20,7 @@ class Search
 
         $result = [];
         foreach ( $this->cities as $city )
-            if ( strpos(strtolower($city), $query) === 0 )
+            if ( strpos(strtolower($city), $query) !== false )
                 $result[] = $city;
 
         return $result;

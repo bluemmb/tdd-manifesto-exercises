@@ -37,4 +37,13 @@ class SearchTest extends TestCase
             $result,
         );
     }
+
+    public function test_search_should_search_query_in_whole_city_name()
+    {
+        $result = $this->search->handle("ci");
+        $this->assertEqualsCanonicalizing(
+            ["Valencia", "New York City"],
+            $result,
+        );
+    }
 }
