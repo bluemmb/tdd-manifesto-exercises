@@ -4,6 +4,8 @@ namespace StringCalculator;
 
 class StringCalculator
 {
+    const SEPARATOR_INDICATOR = "//";
+
     public function Add(string $numbers) : int
     {
         if ( $numbers == "" )
@@ -17,18 +19,72 @@ class StringCalculator
 
     private function splitNumbers($numbers) : array
     {
-        $this->validateLines($numbers);
-        return preg_split("/[\n,]/", $numbers);
+        $separator = $this->determineSeparator($numbers);
+        $lines = explode("\n", $numbers);
+
+        $numbersArray = [];
+        for ( $i=0 ; $i<count($lines) ; $i++ ) {
+            if ( $i == 0 && $this->startsWithSeparatorIndicator($lines[$i]) )
+                continue;
+
+            $numbersInLine = $this->splitNumbersInLine($i, $lines[$i], $separator);
+            $numbersArray = array_merge($numbersArray, $numbersInLine);
+        }
+
+        return $numbersArray;
     }
 
 
-    private function validateLines($numbers) : void
+    private function splitNumbersInLine($lineNumber, $line, $separator) : array
     {
-        $lines = explode("\n", $numbers);
+        $numbersInLine = [];
 
-        foreach ( $lines as $line )
-            if ( strlen($line) && substr($line, -1) == "," )
-                throw new TrailingCommaException();
+        $number = "";
+        for ( $i=0 ; $i<strlen($line) ; ) {
+            $char = $line[$i];
+
+            if ( is_numeric($char) ) {
+                $number .= $char;
+                $i++;
+            }
+            else {
+                $separatorPosition = strpos($line, $separator, $i);
+                if ( $separatorPosition != $i )
+                    throw new InvalidSeparatorException($lineNumber, $i, $separator, substr($line, $i, strlen($separator)));
+
+                if ( strlen($number) ) {
+                    $numbersInLine[] = $number;
+                    $number = "";
+                }
+
+                $i += strlen($separator);
+            }
+        }
+
+        if ( strlen($number) )
+            $numbersInLine[] = $number;
+        else
+            throw new TrailingCommaException();
+
+        return $numbersInLine;
+    }
+
+
+    private function determineSeparator($numbers) : string
+    {
+        if ( ! $this->startsWithSeparatorIndicator($numbers) )
+            return ",";
+
+        $firstNewLinePosition = strpos($numbers, "\n");
+        $separatorIndicatorLength = strlen(self::SEPARATOR_INDICATOR);
+
+        return substr($numbers, $separatorIndicatorLength, $firstNewLinePosition - $separatorIndicatorLength);
+    }
+
+
+    private function startsWithSeparatorIndicator($numbers) : bool
+    {
+        return strpos($numbers, self::SEPARATOR_INDICATOR) === 0;
     }
 
 
