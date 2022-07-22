@@ -7,6 +7,7 @@ class PasswordValidation
     public const ERROR_MIN_LENGTH = "Password must be at least 8 characters";
     public const ERROR_TWO_NUMBERS = "The password must contain at least 2 numbers";
     public const ERROR_CAPITAL_LETTER = "Password must contain at least one capital letter";
+    public const ERROR_SPECIAL_CHARACTER = "Password must contain at least one special character";
 
 
     public function validate($password) : ValidatorResult
@@ -21,6 +22,9 @@ class PasswordValidation
 
         if ( ! $this->validateCapitalLetterInPassword($password) )
             $errors[] = self::ERROR_CAPITAL_LETTER;
+
+        if ( ! $this->validateSpecialCharacterInPassword($password) )
+            $errors[] = self::ERROR_SPECIAL_CHARACTER;
 
         if ( count($errors) )
             return new ValidatorResult(false, $errors);
@@ -59,6 +63,17 @@ class PasswordValidation
     {
         for ( $i=0 ; $i<strlen($password) ; $i++ ) {
             if ( ctype_upper($password[$i]) )
+                return true;
+        }
+
+        return false;
+    }
+
+
+    private function validateSpecialCharacterInPassword($password)
+    {
+        for ( $i=0 ; $i<strlen($password) ; $i++ ) {
+            if ( ! ctype_alnum($password[$i]) )
                 return true;
         }
 
