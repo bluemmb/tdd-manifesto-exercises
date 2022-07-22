@@ -14,16 +14,43 @@ class Scanning
 
     public function scan(string $barcode) : string
     {
+        $price = $this->getPriceWithBarcode($barcode);
+        if ( is_string($price) )
+            return $price;
+
+        return $this->priceToString($price);
+    }
+
+
+    public function total(array $barcodes) : string
+    {
+        $priceSum = 0;
+
+        for ( $i=0 ; $i<count($barcodes) ; $i++ )
+        {
+            $barcode = $barcodes[$i];
+            $price = $this->getPriceWithBarcode($barcode);
+            if ( is_string($price) )
+                return "Item $i: " . $price;
+
+            $priceSum += $price;
+        }
+
+        return $this->priceToString($priceSum);
+    }
+
+
+    private function getPriceWithBarcode(string $barcode)
+    {
         if ( strlen($barcode) == 0 )
             return self::ERROR_EMPTY_BARCODE;
 
         if ( ! array_key_exists($barcode, $this->prices) )
             return self::ERROR_NOT_FOUND;
 
-        $price = $this->prices[$barcode];
-
-        return $this->priceToString($price);
+        return $this->prices[$barcode];
     }
+
 
     private function priceToString(float $price) : string
     {

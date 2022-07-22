@@ -33,4 +33,19 @@ class ScanningTest extends TestCase
     {
         $this->assertSame(Scanning::ERROR_EMPTY_BARCODE, $this->scanning->scan(""));
     }
+
+    public function test_total_method_should_return_sum_of_the_prices()
+    {
+        $this->assertSame("$19.75", $this->scanning->total(["12345", "23456"]));
+    }
+
+    public function test_total_returns_error_for_barcode_that_not_exists()
+    {
+        $this->assertSame("Item 1: " . Scanning::ERROR_NOT_FOUND, $this->scanning->total(["12345", "99999"]));
+    }
+
+    public function test_total_returns_error_for_empty_barcode()
+    {
+        $this->assertSame("Item 0: " . Scanning::ERROR_EMPTY_BARCODE, $this->scanning->total([""]));
+    }
 }
