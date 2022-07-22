@@ -14,8 +14,13 @@ class ScanningTest extends TestCase
         $this->scanning = new Scanning();
     }
 
-    public function test_scan_returns_price_for_barcode()
+    public function test_scan_returns_price_for_barcode_12345()
     {
         $this->assertSame("$7.25", $this->scanning->scan("12345"));
+    }
+
+    public function test_scan_returns_price_for_barcode_23456()
+    {
+        $this->assertSame("$12.50", $this->scanning->scan("23456"));
     }
 }
