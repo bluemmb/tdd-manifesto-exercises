@@ -19,4 +19,13 @@ class SearchTest extends TestCase
         $result = $this->search->handle("a");
         $this->assertCount(0, $result);
     }
+
+    public function test_search_should_return_cities_starting_with_query()
+    {
+        $result = $this->search->handle("Va");
+        $this->assertEqualsCanonicalizing(
+            ["Valencia", "Vancouver"],
+            $result,
+        );
+    }
 }

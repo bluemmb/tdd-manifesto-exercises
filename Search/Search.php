@@ -16,6 +16,11 @@ class Search
         if ( strlen($query) < 2 )
             return [];
 
-        return $this->cities[0];
+        $result = [];
+        foreach ( $this->cities as $city )
+            if ( strpos($city, $query) === 0 )
+                $result[] = $city;
+
+        return $result;
     }
 }
