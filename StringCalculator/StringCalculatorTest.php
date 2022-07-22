@@ -34,4 +34,9 @@ class StringCalculatorTest extends TestCase
         self::assertSame(6, $this->stringCalculator->Add("1,2,3"));
         self::assertSame(15, $this->stringCalculator->Add("1,2,3,4,5"));
     }
+
+    public function test_add_can_use_newline_as_separator()
+    {
+        self::assertSame(15, $this->stringCalculator->Add("1,2\n3\n4,5"));
+    }
 }

@@ -9,8 +9,15 @@ class StringCalculator
         if ( $numbers == "" )
             return 0;
 
-        $numbersArray = explode(",", $numbers);
+        $numbersArray = $this->splitNumbers($numbers);
+
         return $this->sumArrayOfNumbers($numbersArray);
+    }
+
+
+    private function splitNumbers($numbers) : array
+    {
+        return preg_split("/[\n,]/", $numbers);
     }
 
 
