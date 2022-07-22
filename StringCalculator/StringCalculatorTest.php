@@ -39,4 +39,10 @@ class StringCalculatorTest extends TestCase
     {
         self::assertSame(15, $this->stringCalculator->Add("1,2\n3\n4,5"));
     }
+
+    public function test_add_should_throw_error_on_trailing_comma()
+    {
+        $this->expectException(TrailingCommaException::class);
+        $this->stringCalculator->Add("1,2\n3,");
+    }
 }

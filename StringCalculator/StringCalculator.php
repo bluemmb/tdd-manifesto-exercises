@@ -17,7 +17,18 @@ class StringCalculator
 
     private function splitNumbers($numbers) : array
     {
+        $this->validateLines($numbers);
         return preg_split("/[\n,]/", $numbers);
+    }
+
+
+    private function validateLines($numbers) : void
+    {
+        $lines = explode("\n", $numbers);
+
+        foreach ( $lines as $line )
+            if ( strlen($line) && substr($line, -1) == "," )
+                throw new TrailingCommaException();
     }
 
 
