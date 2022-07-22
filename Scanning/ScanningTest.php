@@ -28,4 +28,9 @@ class ScanningTest extends TestCase
     {
         $this->assertSame(Scanning::ERROR_NOT_FOUND, $this->scanning->scan("99999"));
     }
+
+    public function test_scan_returns_error_for_empty_barcode()
+    {
+        $this->assertSame(Scanning::ERROR_EMPTY_BARCODE, $this->scanning->scan(""));
+    }
 }
