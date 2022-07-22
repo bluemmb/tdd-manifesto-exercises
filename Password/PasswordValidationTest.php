@@ -14,14 +14,30 @@ class PasswordValidationTest extends TestCase
         $this->passwordValidation = new PasswordValidation();
     }
 
-    public function test_password_must_be_at_least_8_characters()
+    /** @dataProvider provider_valid_passwords_data */
+    public function test_valid_passwords($password)
+    {
+        $result = $this->passwordValidation->validate($password);
+        $this->assertSame($result->valid, true);
+    }
+
+    public function provider_valid_passwords_data() : array
+    {
+        return [
+            ["1234a5678"],
+            ["abcd1efgh2"],
+            ["a1b2c3d4"],
+        ];
+    }
+
+    public function test_password_less_than_8_characters_should_be_invalid()
     {
         $result = $this->passwordValidation->validate("1234567");
         $this->assertSame($result->valid, false);
         $this->assertSame($result->error, PasswordValidation::ERROR_MIN_LENGTH);
     }
 
-    public function test_password_must_contain_at_least_2_numbers()
+    public function test_password_without_at_least_2_numbers_should_be_invalid()
     {
         $result = $this->passwordValidation->validate("c12abcdsdcsdc");
         $this->assertSame($result->valid, false);
