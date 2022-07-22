@@ -20,4 +20,11 @@ class PasswordValidationTest extends TestCase
         $this->assertSame($result->valid, false);
         $this->assertSame($result->error, PasswordValidation::ERROR_MIN_LENGTH);
     }
+
+    public function test_password_must_contain_at_least_2_numbers()
+    {
+        $result = $this->passwordValidation->validate("c12abcdsdcsdc");
+        $this->assertSame($result->valid, false);
+        $this->assertSame($result->error, PasswordValidation::ERROR_TWO_NUMBERS);
+    }
 }
