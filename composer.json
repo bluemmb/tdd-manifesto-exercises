@@ -7,7 +7,8 @@
             "FizzBuzz\\": "FizzBuzz",
             "StringCalculator\\": "StringCalculator",
             "Password\\": "Password",
-            "Search\\": "Search"
+            "Search\\": "Search",
+            "Scanning\\": "Scanning"
         }
     }
 }
