@@ -46,4 +46,13 @@ class SearchTest extends TestCase
             $result,
         );
     }
+
+    public function test_searching_asterisk_should_return_all_cities()
+    {
+        $result = $this->search->handle("*");
+        $this->assertEqualsCanonicalizing(
+            Cities::load(),
+            $result,
+        );
+    }
 }

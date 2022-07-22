@@ -13,6 +13,9 @@ class Search
 
     public function handle(string $query) : array
     {
+        if ( $query == "*" )
+            return $this->cities;
+
         if ( strlen($query) < 2 )
             return [];
 
